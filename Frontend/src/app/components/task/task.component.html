@@ -1,0 +1,156 @@
+<div class="container" style="width: 100% !important">
+    <div class="row justify-content-center align-items-center" style="width: 100%;">
+        <div class="col-12 backdrop" *ngIf="createtask">
+            <div class="create-task">
+                <h3>Create Task</h3>
+                <form #taskForm="ngForm" (ngSubmit)="CreateTask()">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newTask.title"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description"
+                            [(ngModel)]="newTask.description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <select class="form-control" id="priority" name="priority" [(ngModel)]="newTask.priority"
+                            required>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" id="status" name="status" [(ngModel)]="newTask.status" required>
+                            <option value="pending">Pending</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="criteria">Criteria</label>
+                        <select class="form-control" id="criteria" name="criteria" [(ngModel)]="newTask.criteria"
+                            required>
+                            <option value="job">Job</option>
+                            <option value="home">Home</option>
+                            <option value="shopping">Shopping</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate">Due Date</label>
+                        <input type="date" class="form-control" id="dueDate" name="dueDate"
+                            [(ngModel)]="newTask.dueDate" required>
+                    </div>
+                    <div *ngIf=" taskForm.invalid" class="text-danger mt-3 mb-3">
+                        Please fill in all the fields.
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="!taskForm.valid">Create</button>
+                </form>
+            </div>
+
+
+        </div>
+        <div class="col-12 backdrop" *ngIf="editTasks">
+            <div class="create-task">
+                <h3>Update Task</h3>
+                <form #taskUpdateForm="ngForm" (ngSubmit)="editExectingTask()">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" [(ngModel)]="taskEdit.title"
+                            [ngModelOptions]="{ standalone: true }" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" [(ngModel)]="taskEdit.description"
+                            [ngModelOptions]="{ standalone: true }" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <select class="form-control" id="priority" [(ngModel)]="taskEdit.priority"
+                            [ngModelOptions]="{ standalone: true }" required>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" id="status" [(ngModel)]="taskEdit.status"
+                            [ngModelOptions]="{ standalone: true }" required>
+                            <option value="pending">Pending</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="criteria">Criteria</label>
+                        <select class="form-control" id="criteria" name="criteria" [(ngModel)]="taskEdit.criteria"
+                            required>
+                            <option value="job">Job</option>
+                            <option value="home">Home</option>
+                            <option value="shopping">Shopping</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate">Due Date</label>
+                        <input type="date" class="form-control" id="dueDate" [(ngModel)]="taskEdit.dueDate"
+                            [ngModelOptions]="{ standalone: true }" required>
+                    </div>
+                    <div *ngIf=" taskUpdateForm.invalid" class="text-danger mt-3 mb-3">
+                        Please fill in all the fields.
+                    </div>
+                    <button type="submit" class="btn btn-primary" [disabled]="!taskUpdateForm.valid">Update</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="logout"> <button class="btn btn-primary" (click)="logout()">Logout</button></div>
+        <div class="col-3">
+            <app-side-bar [tasks]="backupTask" (filteredData)="receiveValueFromChild($event)"></app-side-bar>
+        </div>
+        <div class="col-9">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title text-center">Todo List</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div>
+                            <label for="searchInput mb-3 pb-3">Search for Criteria <strong>( job, home, shopping
+                                    )</strong> </label>
+                            <input type="text" class="form-control" id="searchInput" [(ngModel)]="searchTerm"
+                                (keyup.enter)="searchTasks()" placeholder="Please Enter For sreach">
+                        </div>
+                        <div *ngIf="!tasks.length" class="text-center"><strong>NO TASKS</strong></div>
+
+                        <div class="col-md-3" *ngFor="let task of tasks">
+                            <div class="card task-card">
+                                <div class="card-body">
+                                    <h4><strong>{{ task.title }}</strong></h4>
+                                    <p>{{ task.description }}</p>
+                                    <p><strong>Priority:</strong> {{ task.priority }}</p>
+                                    <p><strong>Status:</strong> {{ task.status }}</p>
+                                    <p><strong>Criteria:</strong> {{ task.criteria }}</p>
+
+                                    <p><strong>Date:</strong> {{ task.dueDate | date }}</p>
+                                    <div class="task-actions">
+                                        <button class="btn btn-primary btn-sm " (click)="editTask(task)">Edit</button>
+                                        <button class="btn btn-danger btn-sm" (click)="deleteTask(task._id)"
+                                            style="margin-left: 10px;">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary" (click)="createTaskpopUp()">Create Task</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

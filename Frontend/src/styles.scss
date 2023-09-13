@@ -1,0 +1,66 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card {
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .card-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0069d9;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .card-footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  .card-footer p {
+    margin-bottom: 0;
+  }
+  
+  .card-footer a {
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
